@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "874120892021",
+    "firebase_url": "https://flutter-shop-eb63d.firebaseio.com",
+    "project_id": "flutter-shop-eb63d",
+    "storage_bucket": "flutter-shop-eb63d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874120892021:android:0322251548a333c753f23c",
+        "android_client_info": {
+          "package_name": "onlineshop.inatel.com.br.flutter_online_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874120892021-tjn2tl9kuos0ic4avl74hu3anum9vbrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG4HeHgYEfhfxkbKAOr0Jf5etyL_RapBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874120892021-tjn2tl9kuos0ic4avl74hu3anum9vbrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
