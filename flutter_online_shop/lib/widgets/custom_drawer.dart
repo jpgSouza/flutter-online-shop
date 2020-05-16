@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/tiles/drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final PageController pageController;
+
+  CustomDrawer(this.pageController);
+
   @override
   Widget build(BuildContext context) {
-
     Widget _buildDrawerBack() => Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 0, 90, 163),
-                Color.fromARGB(255, 255, 253, 228)
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter
-          )
-      ),
-    );
+          decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+            Color.fromARGB(255, 0, 90, 163),
+            Color.fromARGB(255, 255, 253, 228)
+          ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+        );
 
     return Drawer(
       child: Stack(
@@ -36,7 +34,10 @@ class CustomDrawer extends StatelessWidget {
                       left: 0.0,
                       child: Text(
                         "Alquingel's\nStore",
-                        style: TextStyle(fontSize: 34.0, fontWeight: FontWeight.bold, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 34.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                     ),
                     Positioned(
@@ -45,11 +46,12 @@ class CustomDrawer extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("Olá,", style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
-                            ),
+                          Text(
+                            "Olá,",
+                            style: TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                           GestureDetector(
                             child: Text(
@@ -57,12 +59,9 @@ class CustomDrawer extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18.0,
-                                  fontWeight: FontWeight.bold
-                              ),
+                                  fontWeight: FontWeight.bold),
                             ),
-                            onTap: (){
-
-                            },
+                            onTap: () {},
                           )
                         ],
                       ),
@@ -71,10 +70,11 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
               Divider(),
-              DrawerTile(Icons.home, "Início"),
-              DrawerTile(Icons.list, "Produtos"),
-              DrawerTile(Icons.location_on, "Lojas"),
-              DrawerTile(Icons.playlist_add_check, "Meus pedidos"),
+              DrawerTile(Icons.home, "Início", pageController, 0),
+              DrawerTile(Icons.list, "Produtos", pageController, 1),
+              DrawerTile(Icons.location_on, "Lojas", pageController, 2),
+              DrawerTile(
+                  Icons.playlist_add_check, "Meus pedidos", pageController, 3),
             ],
           )
         ],
