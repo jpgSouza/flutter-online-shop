@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/activities/login_activity.dart';
 import 'package:flutter_online_shop/tiles/drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -61,7 +62,11 @@ class CustomDrawer extends StatelessWidget {
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context)=>LoginActivity())
+                              );
+                            },
                           )
                         ],
                       ),
