@@ -1,7 +1,8 @@
 language: dart
+sudo: true
 dist: xenial
 os:
-  - windows
+  - linux
 addons:
   apt:
     packages:
