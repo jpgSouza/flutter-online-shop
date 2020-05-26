@@ -9,10 +9,12 @@ class CreateAccountActivity extends StatefulWidget {
 
 class _CreateAccountActivityState extends State<CreateAccountActivity> {
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text("Criar Conta"),
           centerTitle: true,
@@ -108,8 +110,7 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                     controller: model.phoneController,
                     keyboardType: TextInputType.number,
                     validator: (text) {
-                      if (text.isEmpty)
-                        return "Telefone inválido";
+                      if (text.isEmpty) return "Telefone inválido";
                     },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -209,7 +210,23 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
         ));
   }
 
-  void _onSuccess() {}
+  void _onSuccess() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Cadastro realizado com sucesso!"),
+      backgroundColor: Color.fromARGB(255, 0, 90, 163),
+      duration: Duration(seconds: 2),
+    ));
 
-  void _onFail() {}
+    Future.delayed(Duration(seconds: 2)).then((_) {
+      Navigator.of(context).pop();
+    });
+  }
+
+  void _onFail() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Falha ao cadastrar"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+    ));
+  }
 }
