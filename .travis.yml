@@ -11,7 +11,7 @@ install:
   - git clone https://github.com/flutter/flutter.git -b stable
   - ./flutter/bin/flutter doctor
 script:
-  - ./flutter/bin/flutter test
+  - flutter build apk --split-per-abi
 cache:
   directories:
     - $HOME/.pub-cache
