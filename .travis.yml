@@ -1,6 +1,6 @@
 language: dart
-sudo: true
-dist: xenial
+sudo: required
+dist: trusty
 os:
   - linux
 addons:
