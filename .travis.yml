@@ -1,4 +1,4 @@
-language: dart
+language: android
 sudo: required
 dist: trusty
 os:
