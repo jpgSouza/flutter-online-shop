@@ -16,6 +16,8 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
+          backgroundColor: Color.fromRGBO(240, 80, 83, 0.7),
+          elevation: 2.0,
           title: Text("Criar Conta"),
           centerTitle: true,
         ),
@@ -37,10 +39,17 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                       if (text.isEmpty) return "Nome inválido";
                     },
                     decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 240, 80, 83),
+                          ),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: Icon(Icons.person,
+                            color: Color.fromRGBO(240, 80, 83, 0.7)),
                         hintText: "Nome Completo"),
                   ),
                   SizedBox(
@@ -54,10 +63,17 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                         return "E-mail inválido";
                     },
                     decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 240, 80, 83),
+                          ),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        prefixIcon: Icon(Icons.email),
+                        prefixIcon: Icon(Icons.email,
+                            color: Color.fromRGBO(240, 80, 83, 0.7)),
                         hintText: "E-mail"),
                   ),
                   SizedBox(
@@ -75,10 +91,17 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                             if (text.isEmpty) return "CPF inválido";
                           },
                           decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 240, 80, 83),
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
-                              prefixIcon: Icon(Icons.person_pin_circle),
+                              prefixIcon: Icon(Icons.person_pin_circle,
+                                  color: Color.fromRGBO(240, 80, 83, 0.7)),
                               hintText: "CPF"),
                         ),
                       )),
@@ -93,10 +116,17 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                               if (text.isEmpty) return "Sexo inválido";
                             },
                             decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 240, 80, 83),
+                                  ),
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                prefixIcon: Icon(Icons.face),
+                                prefixIcon: Icon(Icons.face,
+                                    color: Color.fromRGBO(240, 80, 83, 0.7)),
                                 hintText: "Sexo"),
                           ),
                         ),
@@ -113,10 +143,17 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                       if (text.isEmpty) return "Telefone inválido";
                     },
                     decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 240, 80, 83),
+                          ),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        prefixIcon: Icon(Icons.phone),
+                        prefixIcon: Icon(Icons.phone,
+                            color: Color.fromRGBO(240, 80, 83, 0.7)),
                         hintText: "Telefone"),
                   ),
                   SizedBox(
@@ -128,10 +165,17 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                       if (text.isEmpty) return "Endereço inválido";
                     },
                     decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 240, 80, 83),
+                          ),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        prefixIcon: Icon(Icons.home),
+                        prefixIcon: Icon(Icons.home,
+                            color: Color.fromRGBO(240, 80, 83, 0.7)),
                         hintText: "Endereço"),
                   ),
                   SizedBox(
@@ -145,14 +189,22 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                     },
                     obscureText: true,
                     decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 240, 80, 83),
+                        ),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                       hintText: "Senha",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: Icon(Icons.lock,
+                          color: Color.fromRGBO(240, 80, 83, 0.7)),
                       suffixIcon: IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.visibility_off),
+                        icon: Icon(Icons.visibility_off,
+                            color: Color.fromRGBO(240, 80, 83, 0.7)),
                       ),
                     ),
                   ),
@@ -184,8 +236,8 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [
-                                  Color.fromARGB(255, 44, 62, 80),
-                                  Color.fromARGB(255, 76, 161, 175),
+                                  Color.fromARGB(255, 255, 253, 228),
+                                  Color.fromARGB(255, 240, 80, 83),
                                 ],
                                 begin: Alignment.bottomLeft,
                                 end: Alignment.bottomRight),
