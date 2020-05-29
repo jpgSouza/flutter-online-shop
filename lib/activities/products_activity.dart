@@ -16,7 +16,7 @@ class ProductsActivity extends StatelessWidget {
           appBar: AppBar(
             title: Text(snapshot.data["title"]),
             centerTitle: true,
-            backgroundColor: Color.fromARGB(255, 0, 90, 163),
+            backgroundColor: Color.fromRGBO(240, 80, 83,0.7),
             bottom: TabBar(
               indicatorColor: Colors.white,
               tabs: <Widget>[

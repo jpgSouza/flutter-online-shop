@@ -20,7 +20,7 @@ class HomeActivity extends StatelessWidget {
           appBar: AppBar(
             title: Text("Produtos"),
             elevation: 8.0,
-            backgroundColor: Color.fromARGB(255, 0, 90, 163),
+            backgroundColor: Color.fromRGBO(240, 80, 83,0.7),
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),

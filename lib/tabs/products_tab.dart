@@ -17,7 +17,7 @@ class ProductsTab extends StatelessWidget {
             tiles: snapshot.data.documents.map((doc) {
               return ProductsTile(doc);
             }).toList(),
-            color: Color.fromARGB(150, 0, 90, 163),
+            color: Colors.grey,
           ).toList();
 
           return ListView(

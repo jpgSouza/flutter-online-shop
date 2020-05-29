@@ -12,6 +12,8 @@ class LoginActivity extends StatefulWidget {
 class _LoginActivityState extends State<LoginActivity> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _setToggle = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +170,9 @@ class _LoginActivityState extends State<LoginActivity> {
                                     hintStyle:
                                         TextStyle(color: Colors.grey[400]),
                                     suffixIcon: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+
+                                      },
                                       icon: Icon(Icons.visibility_off, color:Color.fromRGBO(240, 80, 83, 0.7),),
                                     ),
                                   ),

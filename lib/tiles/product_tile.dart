@@ -42,7 +42,7 @@ class ProductTile extends StatelessWidget {
                             Text(
                               "R\$ " + data.price.toStringAsFixed(2),
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 90, 163),
+                                  color: Color.fromARGB(255, 240, 80, 83),
                                   fontSize: 17.0,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -65,7 +65,7 @@ class ProductTile extends StatelessWidget {
                     Flexible(
                       flex: 1,
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.only(left: 50.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -76,7 +76,7 @@ class ProductTile extends StatelessWidget {
                             Text(
                               "R\$ " + data.price.toStringAsFixed(2),
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 0, 90, 163),
+                                  color: Color.fromARGB(255, 240, 80, 83),
                                   fontSize: 17.0,
                                   fontWeight: FontWeight.bold),
                             ),
