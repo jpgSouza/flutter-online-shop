@@ -10,9 +10,11 @@ class Cart extends Model {
   List<CartProduct> products = [];
   bool isLoading = false;
 
-  Cart(this.user){
-    if(user.isLoggedIn())
-      _loadCart();
+  String couponCode;
+  int discountPercentage = 0;
+
+  Cart(this.user) {
+    if (user.isLoggedIn()) _loadCart();
   }
 
   static Cart of(BuildContext context) => ScopedModel.of<Cart>(context);
@@ -78,10 +80,38 @@ class Cart extends Model {
         .collection("cart")
         .getDocuments();
 
-    products = querySnapshot.documents.map((doc) => CartProduct.fromDocument(doc)).toList();
+    products = querySnapshot.documents
+        .map((doc) => CartProduct.fromDocument(doc))
+        .toList();
 
     notifyListeners();
+  }
 
+  void applyDiscount(String couponCode, int percent) {
+    this.couponCode = couponCode;
+    this.discountPercentage = percent;
+  }
+
+  void updatePrices(){
+    notifyListeners();
+  }
+
+  double cartSubTotal() {
+    double price = 0.0;
+    for (CartProduct cartProduct in products) {
+      if (cartProduct.productData != null) {
+        price += cartProduct.amount * cartProduct.productData.price;
+      }
+    }
+    return price;
+  }
+
+  double cartShipping() {
+    return 4.99;
+  }
+
+  double cartDiscount() {
+    return cartSubTotal() * discountPercentage / 100.0;
   }
 
 }

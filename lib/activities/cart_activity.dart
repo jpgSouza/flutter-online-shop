@@ -3,6 +3,10 @@ import 'package:flutter_online_shop/activities/login_activity.dart';
 import 'package:flutter_online_shop/model/cart_model.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:flutter_online_shop/tiles/cart_tile.dart';
+import 'package:flutter_online_shop/widgets/discount_card.dart';
+import 'package:flutter_online_shop/widgets/payment_card.dart';
+import 'package:flutter_online_shop/widgets/resume_card.dart';
+import 'package:flutter_online_shop/widgets/shipping_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartActivity extends StatelessWidget {
@@ -153,7 +157,11 @@ class CartActivity extends StatelessWidget {
                   children: model.products.map((product) {
                     return CartTile(product);
                   }).toList(),
-                )
+                ),
+                DiscountCoupon(),
+                ShippingCart(),
+                PaymentCard(),
+                ResumeCard(),
               ],
             );
           }

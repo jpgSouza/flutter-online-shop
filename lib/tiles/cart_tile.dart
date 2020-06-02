@@ -12,6 +12,7 @@ class CartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget _buildContent() {
+      Cart.of(context).updatePrices();
       return Row(
         children: <Widget>[
           Container(
@@ -81,7 +82,7 @@ class CartTile extends StatelessWidget {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(
-                          Icons.keyboard_arrow_up,
+                          Icons.add_circle_outline,
                         ),
                         color: Color.fromARGB(255, 240, 80, 83),
                         onPressed: () {
@@ -91,7 +92,7 @@ class CartTile extends StatelessWidget {
                       Text(cartProduct.amount.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
                       IconButton(
                         icon: Icon(
-                          Icons.keyboard_arrow_down,
+                          Icons.remove_circle_outline,
                         ),
                         color: Color.fromARGB(255, 240, 80, 83),
                         onPressed: cartProduct.amount > 1 ? () {
@@ -99,7 +100,7 @@ class CartTile extends StatelessWidget {
                         } : null,
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
