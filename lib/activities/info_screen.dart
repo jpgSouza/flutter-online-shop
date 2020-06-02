@@ -1,6 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/activities/cart_activity.dart';
+import 'package:flutter_online_shop/activities/login_activity.dart';
+import 'package:flutter_online_shop/data/cart_product.dart';
 import 'package:flutter_online_shop/data/product_data.dart';
+import 'package:flutter_online_shop/model/cart_model.dart';
+import 'package:flutter_online_shop/model/user_model.dart';
 
 class InfoScreen extends StatefulWidget {
   final ProductData data;
@@ -136,7 +141,26 @@ class _InfoScreenState extends State<InfoScreen> {
                         SizedBox(
                           height: 44.0,
                           child: RaisedButton(
-                            onPressed: size != null ? () {} : null,
+                            onPressed: size != null ? () {
+                              if(User.of(context).isLoggedIn()){
+
+                                CartProduct cartProduct = CartProduct();
+                                cartProduct.size = size;
+                                cartProduct.amount = 1;
+                                cartProduct.pid = data.id;
+                                cartProduct.categoty = data.category;
+
+                                Cart.of(context).addCart(cartProduct);
+
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context)=>CartActivity())
+                                );
+                              }else{
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context)=>LoginActivity())
+                                );
+                              }
+                            } : null,
                             color: Color.fromARGB(255, 0, 90, 163),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
@@ -159,11 +183,11 @@ class _InfoScreenState extends State<InfoScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Icon(
-                                        Icons.shopping_cart,
+                                        Icons.add_shopping_cart,
                                         color: Colors.white,
                                       ),
-                                      Text(
-                                        "Adicionar ao carrinho",
+                                      Text(User.of(context).isLoggedIn() ?
+                                        "Adicionar ao carrinho" : "Entre para Comprar",
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),

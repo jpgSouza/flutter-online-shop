@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/data/product_data.dart';
 import 'package:flutter_online_shop/tiles/product_tile.dart';
@@ -55,19 +56,23 @@ class ProductsActivity extends StatelessWidget {
                           ),
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (context, index) {
+                            ProductData data = ProductData.fromDocument(
+                                snapshot.data.documents[index]);
+                            data.category = this.snapshot.documentID;
                             return ProductTile(
                                 "grid",
-                                ProductData.fromDocument(
-                                    snapshot.data.documents[index]));
+                                data);
                           }),
                       ListView.builder(
                           padding: EdgeInsets.all(4.0),
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (context, index) {
+                            ProductData data = ProductData.fromDocument(
+                                snapshot.data.documents[index]);
+                            data.category = this.snapshot.documentID;
                             return ProductTile(
                                 "list",
-                                ProductData.fromDocument(
-                                    snapshot.data.documents[index]));
+                                data);
                           }),
                     ],
                   );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_online_shop/activities/create_account_activity.dart';
+import 'package:flutter_online_shop/activities/cart_activity.dart';
 import 'package:flutter_online_shop/activities/home_activity.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'activities/login_activity.dart';
+import 'model/cart_model.dart';
 import 'model/user_model.dart';
 
 void main() => runApp(MyApp());
@@ -14,14 +14,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel<User>(
       model: User(),
-      child: MaterialApp(
-          title: 'Alquingel Store',
-          theme: ThemeData(
-              primarySwatch: Colors.blue,
-              primaryColor: Color.fromARGB(255, 4, 125, 141)
-          ),
-          debugShowCheckedModeBanner: false,
-          home:HomeActivity()
+      child: ScopedModelDescendant<User>(
+        builder: (context, child, model){
+          return ScopedModel<Cart>(
+            model: Cart(model),
+            child: MaterialApp(
+                title: 'Alquingel Store',
+                theme: ThemeData(
+                    primarySwatch: Colors.blue,
+                    primaryColor: Color.fromARGB(255, 4, 125, 141)
+                ),
+                debugShowCheckedModeBanner: false,
+                home:HomeActivity()
+            ),
+          );
+        }
       ),
     );
   }

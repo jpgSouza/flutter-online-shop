@@ -19,6 +19,8 @@ class User extends Model{
   final addressController = TextEditingController();
   final passwordController = TextEditingController();
 
+  static User of(BuildContext context) => ScopedModel.of<User>(context);
+
 
   @override
   void addListener(VoidCallback listener) {
