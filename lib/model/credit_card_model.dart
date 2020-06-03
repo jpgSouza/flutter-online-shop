@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class CreditCard extends Model{
-
+class CreditCard extends Model {
   Map<String, dynamic> creditCardData = Map();
 
   User user;
@@ -14,27 +13,35 @@ class CreditCard extends Model{
   final cardExpirationDate = TextEditingController();
   final cardSecurityCode = TextEditingController();
 
-  String flag;
+  String cardFlag;
+  String cardId;
 
-  CreditCard(this.user);
+  CreditCard(this.user){
+    if(this.user.isLoggedIn()) _loadCard();
+  }
 
-  static CreditCard of(BuildContext context) => ScopedModel.of<CreditCard>(context);
+  static CreditCard of(BuildContext context) =>
+      ScopedModel.of<CreditCard>(context);
 
-  void createCard(Map<String, dynamic> cardData) async{
-
+  void createCard(Map<String, dynamic> cardData) async {
     await _saveCreditCard(cardData);
 
     notifyListeners();
   }
 
-  Future<Null> _saveCreditCard(Map<String, dynamic> creditCardData) async{
+  Future<Null> _saveCreditCard(Map<String, dynamic> creditCardData) async {
     this.creditCardData = creditCardData;
 
-    await Firestore.instance.collection("users").document(user.firebaseUser.uid).collection("creditCard").add(creditCardData);
-
+    await Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("creditCard")
+        .add(creditCardData).then((doc){
+          cardId = doc.documentID;
+    });
   }
 
-  void update(){
+  void _loadCard() async {
     notifyListeners();
   }
 
