@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/activities/credit_card_activity.dart';
 
-class PaymentCard extends StatelessWidget {
+class PaymentMethodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,13 +18,22 @@ class PaymentCard extends StatelessWidget {
         ),
         trailing: Icon(
           Icons.keyboard_arrow_down,
-          color: Color.fromRGBO(240, 80, 83, 0.7),
           size: 28.0,
+          color: Color.fromRGBO(240, 80, 83, 0.7),
         ),
         leading: Icon(
           Icons.credit_card,
           color: Color.fromRGBO(240, 80, 83, 0.7),
         ),
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: IconButton(icon: Icon(Icons.add), onPressed: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => CreditCardActivity()));
+            },),
+          ),
+        ],
       ),
     );
   }

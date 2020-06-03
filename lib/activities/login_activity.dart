@@ -12,9 +12,6 @@ class LoginActivity extends StatefulWidget {
 class _LoginActivityState extends State<LoginActivity> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _setToggle = false;
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

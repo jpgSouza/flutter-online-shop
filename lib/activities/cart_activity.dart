@@ -4,7 +4,7 @@ import 'package:flutter_online_shop/model/cart_model.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:flutter_online_shop/tiles/cart_tile.dart';
 import 'package:flutter_online_shop/widgets/discount_card.dart';
-import 'package:flutter_online_shop/widgets/payment_card.dart';
+import 'package:flutter_online_shop/widgets/payment_method_card.dart';
 import 'package:flutter_online_shop/widgets/resume_card.dart';
 import 'package:flutter_online_shop/widgets/shipping_card.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -160,7 +160,7 @@ class CartActivity extends StatelessWidget {
                 ),
                 DiscountCoupon(),
                 ShippingCart(),
-                PaymentCard(),
+                PaymentMethodCard(),
                 ResumeCard(),
               ],
             );
