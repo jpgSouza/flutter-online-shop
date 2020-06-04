@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/activities/credit_card_activity.dart';
 import 'package:flutter_online_shop/activities/payment_method_activity.dart';
 import 'package:flutter_online_shop/model/credit_card_model.dart';
 
@@ -29,21 +30,16 @@ class PaymentMethodCard extends StatelessWidget {
         ),
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: FutureBuilder<DocumentSnapshot>(
-              future: Firestore.instance.collection("users").document(CreditCard.of(context).user.firebaseUser.uid)
-                  .collection("creditCard").document(CreditCard.of(context).cardId).get(), builder: (context, snapshot){
-                if(snapshot.hasData){
-                  return Text("Existe");
-                }else{
-                  return IconButton(icon: Icon(Icons.add), onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PaymentMethodActivity()));
-                  },);
-                }
-            },
-            ),
-          ),
+              padding: EdgeInsets.all(8.0),
+              child: StreamBuilder(
+                stream: Firestore.instance.collection("users")
+                    .document(CreditCard.of(context).user.firebaseUser.uid).collection("creditCard")
+                    .document(CreditCard.of(context).cardId).snapshots(),
+                builder: (context, snapshot){
+                  return Text("Contador: ${snapshot.data["cardName"]}");
+                },
+              )
+          )
         ],
       ),
     );
