@@ -93,8 +93,6 @@ class PaymentMethodActivity extends StatelessWidget {
                               Image(
                                 image: AssetImage(
                                     'lib/images/master_card_icon.png'),
-                                height: 40,
-                                width: 40,
                               ),
                               SizedBox(
                                 width: 14.0,

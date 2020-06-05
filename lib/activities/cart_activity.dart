@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/activities/login_activity.dart';
 import 'package:flutter_online_shop/model/cart_model.dart';
+import 'package:flutter_online_shop/model/credit_card_model.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:flutter_online_shop/tiles/cart_tile.dart';
 import 'package:flutter_online_shop/widgets/discount_card.dart';
@@ -12,6 +13,7 @@ import 'package:scoped_model/scoped_model.dart';
 class CartActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CreditCard.of(context).loadCard();
     return Scaffold(
       appBar: AppBar(
         title: Text("Meu Carrinho"),

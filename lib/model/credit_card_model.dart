@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_online_shop/data/card_data.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CreditCard extends Model {
+
+  List<CardData> cards = [];
   Map<String, dynamic> creditCardData = Map();
 
   User user;
@@ -17,7 +20,7 @@ class CreditCard extends Model {
   String cardId;
 
   CreditCard(this.user){
-    if(this.user.isLoggedIn()) _loadCard();
+    if(this.user.isLoggedIn()) loadCard();
   }
 
   static CreditCard of(BuildContext context) =>
@@ -39,10 +42,22 @@ class CreditCard extends Model {
         .add(creditCardData).then((doc){
           cardId = doc.documentID;
     });
+
+    print(cardId);
+
   }
 
-  void _loadCard() async {
+  void loadCard() async {
+
+    QuerySnapshot querySnapshot = await Firestore.instance.collection("users")
+    .document(user.firebaseUser.uid).collection("creditCard").getDocuments();
+
+    cards = querySnapshot.documents.map((doc) => CardData.fromDocument(doc)).toList();
+
+    print(cards);
+
     notifyListeners();
+
   }
 
 
