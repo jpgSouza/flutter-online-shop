@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_online_shop/activities/payment_method_activity.dart';
 import 'package:flutter_online_shop/activities/home_activity.dart';
 import 'package:flutter_online_shop/model/credit_card_model.dart';
 import 'package:scoped_model/scoped_model.dart';

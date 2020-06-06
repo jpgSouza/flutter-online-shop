@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/activities/payment_method_activity.dart';
-import 'package:flutter_online_shop/data/card_data.dart';
 import 'package:flutter_online_shop/model/credit_card_model.dart';
 
 class PaymentMethodCard extends StatelessWidget {
