@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/activities/profile_info_activity.dart';
 
 class ProfileCard extends StatelessWidget {
   @override
@@ -21,7 +22,11 @@ class ProfileCard extends StatelessWidget {
                     icon: Icon(Icons.keyboard_arrow_right),
                     color: Color.fromRGBO(240, 80, 83, 0.7),
                     iconSize: 28.0,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context)=>ProfileInfoActivity())
+                      );
+                    },
                   ),
                 ],
               ),

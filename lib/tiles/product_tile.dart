@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_online_shop/activities/info_screen.dart';
+import 'package:flutter_online_shop/activities/info_activity.dart';
 import 'package:flutter_online_shop/data/product_data.dart';
 
 class ProductTile extends StatelessWidget {
@@ -14,7 +14,7 @@ class ProductTile extends StatelessWidget {
     return InkWell(
       onTap: (){
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context)=>InfoScreen(data))
+          MaterialPageRoute(builder: (context)=>InfoActivity(data))
         );
       },
       child: Card(

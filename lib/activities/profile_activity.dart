@@ -52,11 +52,21 @@ class ProfileActivity extends StatelessWidget {
                     height: 10.0,
                   ),
                   Text(
-                    "João Pedro Giacometti de Souza",
+                    "${User.of(context).userData["name"]}",
                     style: TextStyle(
                         color: Color.fromRGBO(240, 80, 83, 0.6),
                         fontSize: 16.0,
                         fontWeight: FontWeight.w400),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    "${User.of(context).userData["email"]}",
+                    style: TextStyle(
+                        color: Color.fromRGBO(240, 80, 83, 0.6),
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

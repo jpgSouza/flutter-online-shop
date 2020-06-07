@@ -7,21 +7,21 @@ import 'package:flutter_online_shop/data/product_data.dart';
 import 'package:flutter_online_shop/model/cart_model.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 
-class InfoScreen extends StatefulWidget {
+class InfoActivity extends StatefulWidget {
   final ProductData data;
 
-  InfoScreen(this.data);
+  InfoActivity(this.data);
 
   @override
-  _InfoScreenState createState() => _InfoScreenState(data);
+  _InfoActivityState createState() => _InfoActivityState(data);
 }
 
-class _InfoScreenState extends State<InfoScreen> {
+class _InfoActivityState extends State<InfoActivity> {
   final ProductData data;
 
   String size;
 
-  _InfoScreenState(this.data);
+  _InfoActivityState(this.data);
 
   @override
   Widget build(BuildContext context) {
