@@ -3,8 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class User extends Model{
-
+class User extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
   Map<String, dynamic> userData = Map();
@@ -16,11 +15,18 @@ class User extends Model{
   final cpfController = TextEditingController();
   final genderController = TextEditingController();
   final phoneController = TextEditingController();
-  final addressController = TextEditingController();
+  final addressNumberController = TextEditingController();
   final passwordController = TextEditingController();
 
-  static User of(BuildContext context) => ScopedModel.of<User>(context);
+  final searchCEP = TextEditingController();
 
+  String cep;
+  String street;
+  String district;
+  String uf;
+  String locality;
+
+  static User of(BuildContext context) => ScopedModel.of<User>(context);
 
   @override
   void addListener(VoidCallback listener) {
@@ -29,14 +35,18 @@ class User extends Model{
     _loadCurrentUser();
   }
 
-  void createAccount({@required Map<String, dynamic> userData, @required String pass, @required VoidCallback onSuccess, @required VoidCallback onFail}){
+  void createAccount(
+      {@required Map<String, dynamic> userData,
+      @required String pass,
+      @required VoidCallback onSuccess,
+      @required VoidCallback onFail}) {
     isLoading = true;
     notifyListeners();
 
-    _auth.createUserWithEmailAndPassword(
-        email: userData["email"],
-        password: pass
-    ).then((user) async{
+    _auth
+        .createUserWithEmailAndPassword(
+            email: userData["email"], password: pass)
+        .then((user) async {
       firebaseUser = user;
 
       await _saveUserData(userData);
@@ -44,19 +54,24 @@ class User extends Model{
       onSuccess();
       isLoading = false;
       notifyListeners();
-    }).catchError((err){
+    }).catchError((err) {
       onFail();
       isLoading = false;
       notifyListeners();
     });
   }
 
-  void login({@required String email, @required String password, @required VoidCallback onSuccess, @required VoidCallback onFail}) async{
-
+  void login(
+      {@required String email,
+      @required String password,
+      @required VoidCallback onSuccess,
+      @required VoidCallback onFail}) async {
     isLoading = true;
     notifyListeners();
 
-    _auth.signInWithEmailAndPassword(email: email, password: password).then((user) async{
+    _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((user) async {
       firebaseUser = user;
 
       await _loadCurrentUser();
@@ -64,16 +79,14 @@ class User extends Model{
       onSuccess();
       isLoading = false;
       notifyListeners();
-
-    }).catchError((err){
+    }).catchError((err) {
       onFail();
       isLoading = false;
       notifyListeners();
     });
-
   }
 
-  void logout() async{
+  void logout() async {
     await _auth.signOut();
 
     userData = Map();
@@ -82,27 +95,50 @@ class User extends Model{
     notifyListeners();
   }
 
-  void recoverPassword({@required String email}){
+  void recoverPassword({@required String email}) {
     _auth.sendPasswordResetEmail(email: email);
   }
 
-  bool isLoggedIn(){
+  bool isLoggedIn() {
     return firebaseUser != null;
   }
 
-  Future<Null> _saveUserData(Map<String, dynamic> userData) async{
+  Future<Null> _saveUserData(Map<String, dynamic> userData) async {
     this.userData = userData;
-    await Firestore.instance.collection("users").document(firebaseUser.uid).setData(userData);
+    await Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .setData(userData);
   }
 
   Future<Null> _loadCurrentUser() async {
-    if(firebaseUser == null)
-      firebaseUser = await _auth.currentUser();
-    if(firebaseUser != null)
-      if(userData["name"] == null){
-        DocumentSnapshot docUser = await Firestore.instance.collection("users").document(firebaseUser.uid).get();
-        userData = docUser.data;
-      }
+    if (firebaseUser == null) firebaseUser = await _auth.currentUser();
+    if (firebaseUser != null) if (userData["name"] == null) {
+      DocumentSnapshot docUser = await Firestore.instance
+          .collection("users")
+          .document(firebaseUser.uid)
+          .get();
+      userData = docUser.data;
+    }
+    notifyListeners();
+  }
+
+  void deleteProfile() {
+    Firestore.instance.collection("users").document(firebaseUser.uid).delete();
+    firebaseUser.delete();
+    logout();
+    notifyListeners();
+  }
+
+  void editProfile(
+      {@required Map<String, dynamic> userData,
+      @required VoidCallback onSuccess,}) {
+    this.userData = userData;
+    Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .updateData(userData);
+    onSuccess();
     notifyListeners();
   }
 

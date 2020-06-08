@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/data/cep_data.dart';
+import 'package:flutter_online_shop/data/cep_service_data.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -10,6 +13,12 @@ class CreateAccountActivity extends StatefulWidget {
 class _CreateAccountActivityState extends State<CreateAccountActivity> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool _loading = false;
+
+  CepData _cepData;
+
+  String _result;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +97,8 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                           controller: model.cpfController,
                           keyboardType: TextInputType.number,
                           validator: (text) {
-                            if (text.isEmpty) return "CPF inválido";
+                            if (text.isEmpty)
+                              return "CPF inválido";
                           },
                           decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
@@ -140,7 +150,8 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                     controller: model.phoneController,
                     keyboardType: TextInputType.number,
                     validator: (text) {
-                      if (text.isEmpty) return "Telefone inválido";
+                      if (text.isEmpty || text.length != 12)
+                        return "Telefone inválido";
                     },
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -160,9 +171,10 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                     height: 20.0,
                   ),
                   TextFormField(
-                    controller: model.addressController,
+                    keyboardType: TextInputType.number,
+                    controller: model.searchCEP,
                     validator: (text) {
-                      if (text.isEmpty) return "Endereço inválido";
+                      if (text.isEmpty) return "CEP inváilido";
                     },
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -174,13 +186,25 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        prefixIcon: Icon(Icons.home,
+                        prefixIcon: Icon(Icons.my_location,
                             color: Color.fromRGBO(240, 80, 83, 0.7)),
-                        hintText: "Endereço"),
+                        suffixIcon: IconButton(
+                          icon: _loading
+                              ? CircularProgressIndicator()
+                              : Icon(
+                                  Icons.search,
+                                  color: Color.fromRGBO(240, 80, 83, 0.7),
+                                ),
+                          onPressed: () {
+                            _searchCep(model);
+                          },
+                        ),
+                        hintText: "CEP"),
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
+                  _buildResultForm(),
                   TextFormField(
                     controller: model.passwordController,
                     validator: (text) {
@@ -220,7 +244,12 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
                           "cpf": model.cpfController.text,
                           "gender": model.genderController.text,
                           "phone": model.phoneController.text,
-                          "address": model.addressController.text
+                          "cep": model.cep,
+                          "uf": model.uf,
+                          "street": model.street,
+                          "distric": model.district,
+                          "locality": model.locality,
+                          "number": model.addressNumberController.text
                         };
                         model.createAccount(
                             userData: userData,
@@ -280,5 +309,163 @@ class _CreateAccountActivityState extends State<CreateAccountActivity> {
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),
     ));
+  }
+
+  Future _searchCep(User user) async {
+    _searching(true);
+
+    final cep = user.searchCEP.text;
+
+    _cepData = await CepService.fetchCep(cep: cep);
+
+    setState(() {
+      _result = _cepData.toJson();
+    });
+
+    user.cep = _cepData.cep;
+    user.locality = _cepData.locality;
+    user.district = _cepData.district;
+    user.uf = _cepData.uf;
+    user.street = _cepData.street;
+
+    _searching(false);
+  }
+
+  void _searching(bool enable) {
+    setState(() {
+      _result = enable ? '' : _result;
+      _loading = enable;
+    });
+  }
+
+  Widget _buildResultForm() {
+    return _result == null || _loading == true
+        ? Container()
+        : Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    child: Container(
+                      child: TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 240, 80, 83),
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          hintText: "${_cepData.locality}",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          prefixIcon:
+                          Icon(Icons.home, color: Color.fromRGBO(240, 80, 83, 0.7)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Container(
+                    width: 100,
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      enabled: false,
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 240, 80, 83),
+                          ),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        hintText: "${_cepData.uf}",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    child: Container(
+                      child: TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 240, 80, 83),
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          hintText: "${_cepData.street}",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          prefixIcon: Icon(Icons.location_on,
+                              color: Color.fromRGBO(240, 80, 83, 0.7)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Container(
+                    width: 100,
+                    child: TextFormField(
+                      controller: User.of(context).addressNumberController,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 240, 80, 83),
+                          ),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        hintText: "n°",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextField(
+                enabled: false,
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 240, 80, 83),
+                    ),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  hintText: "${_cepData.district}",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  prefixIcon:
+                  Icon(Icons.near_me, color: Color.fromRGBO(240, 80, 83, 0.7)),
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+            ],
+          );
   }
 }

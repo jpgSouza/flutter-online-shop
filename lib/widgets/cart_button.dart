@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/activities/cart_activity.dart';
+import 'package:flutter_online_shop/model/user_model.dart';
 
 class CartButton extends StatelessWidget {
   @override

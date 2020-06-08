@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/activities/profile_adress_activity.dart';
 import 'package:flutter_online_shop/activities/profile_info_activity.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -40,7 +41,11 @@ class ProfileCard extends StatelessWidget {
                     iconSize: 28.0,
                     icon: Icon(Icons.keyboard_arrow_right),
                     color: Color.fromRGBO(240, 80, 83, 0.7),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context)=>ProfileAdressActivity())
+                      );
+                    },
                   ),
                 ],
               ),

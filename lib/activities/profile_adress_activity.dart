@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class ProfileInfoActivity extends StatefulWidget {
+class ProfileAdressActivity extends StatefulWidget {
   @override
-  _ProfileInfoActivityState createState() => _ProfileInfoActivityState();
+  _ProfileAdressActivityState createState() => _ProfileAdressActivityState();
 }
 
-class _ProfileInfoActivityState extends State<ProfileInfoActivity> {
+class _ProfileAdressActivityState extends State<ProfileAdressActivity> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool _enableField = false;
 
   String name;
   String email;
@@ -32,11 +31,7 @@ class _ProfileInfoActivityState extends State<ProfileInfoActivity> {
             child: IconButton(
               icon: Icon(Icons.mode_edit),
               color: Colors.white,
-              onPressed: () {
-                setState(() {
-                  _enableField = true;
-                });
-              },
+              onPressed: () {},
             ),
           ),
         ],
@@ -70,7 +65,7 @@ class _ProfileInfoActivityState extends State<ProfileInfoActivity> {
                               return 'Entre com seu nome';
                             }
                           },
-                          enabled: _enableField,
+                          enabled: true,
                           initialValue: model.userData["name"],
                           decoration: InputDecoration(
                             labelText: "Nome",
@@ -87,7 +82,7 @@ class _ProfileInfoActivityState extends State<ProfileInfoActivity> {
                             return "Email Inválido";
                           }
                         },
-                        enabled: _enableField,
+                        enabled: true,
                         initialValue: model.userData["email"],
                         decoration: InputDecoration(
                           labelText: "E-mail",
@@ -105,7 +100,7 @@ class _ProfileInfoActivityState extends State<ProfileInfoActivity> {
                             return "CPF Inválido";
                           }
                         },
-                        enabled: _enableField,
+                        enabled: true,
                         initialValue: model.userData["cpf"],
                         decoration: InputDecoration(
                           labelText: "CPF",
@@ -123,7 +118,7 @@ class _ProfileInfoActivityState extends State<ProfileInfoActivity> {
                             return "Telefone Inválido";
                           }
                         },
-                        enabled: _enableField,
+                        enabled: true,
                         initialValue: model.userData["phone"],
                         decoration: InputDecoration(
                           labelText: "Telefone",
@@ -151,10 +146,6 @@ class _ProfileInfoActivityState extends State<ProfileInfoActivity> {
                               userData: userData,
                               onSuccess: _onSuccess,
                             );
-
-                            setState(() {
-                              _enableField = false;
-                            });
                           }
                         },
                         shape: RoundedRectangleBorder(
