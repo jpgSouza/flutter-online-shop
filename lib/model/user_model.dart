@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class User extends Model {
+
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
   Map<String, dynamic> userData = Map();
@@ -130,7 +131,7 @@ class User extends Model {
     notifyListeners();
   }
 
-  void editProfile(
+  void editProfile (
       {@required Map<String, dynamic> userData,
       @required VoidCallback onSuccess,}) {
     this.userData = userData;
@@ -138,7 +139,17 @@ class User extends Model {
         .collection("users")
         .document(firebaseUser.uid)
         .updateData(userData);
+    loadUserData();
     onSuccess();
+    notifyListeners();
+  }
+
+  void loadUserData() async{
+    DocumentSnapshot docUser = await Firestore.instance
+        .collection("users")
+        .document(firebaseUser.uid)
+        .get();
+    userData = docUser.data;
     notifyListeners();
   }
 

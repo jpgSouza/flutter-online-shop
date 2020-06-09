@@ -49,20 +49,6 @@ class ProfileCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text("Formas de Pagamento"),
-                  IconButton(
-                    padding: EdgeInsets.all(0.0),
-                    iconSize: 28.0,
-                    icon: Icon(Icons.keyboard_arrow_right),
-                    color: Color.fromRGBO(240, 80, 83, 0.7),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
             ],
           ),
         ));

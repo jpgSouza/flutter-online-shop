@@ -52,7 +52,7 @@ class ProfileActivity extends StatelessWidget {
                     height: 10.0,
                   ),
                   Text(
-                    "${User.of(context).userData["name"]}",
+                    "${model.userData["name"]}",
                     style: TextStyle(
                         color: Color.fromRGBO(240, 80, 83, 0.6),
                         fontSize: 16.0,
@@ -62,7 +62,7 @@ class ProfileActivity extends StatelessWidget {
                     height: 8.0,
                   ),
                   Text(
-                    "${User.of(context).userData["email"]}",
+                    "${model.userData["email"]}",
                     style: TextStyle(
                         color: Color.fromRGBO(240, 80, 83, 0.6),
                         fontSize: 16.0,

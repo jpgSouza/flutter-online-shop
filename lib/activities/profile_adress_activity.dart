@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -10,11 +11,14 @@ class ProfileAdressActivity extends StatefulWidget {
 class _ProfileAdressActivityState extends State<ProfileAdressActivity> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _enableField = false;
 
-  String name;
-  String email;
-  String cpf;
-  String phoneNumber;
+  String cep;
+  String district;
+  String locality;
+  String street;
+  String number;
+  String uf;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class _ProfileAdressActivityState extends State<ProfileAdressActivity> {
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 4.0,
-        title: Text("Informações Gerais"),
+        title: Text("Endereço de Cobrança"),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(240, 80, 83, 0.7),
         actions: <Widget>[
@@ -31,7 +35,11 @@ class _ProfileAdressActivityState extends State<ProfileAdressActivity> {
             child: IconButton(
               icon: Icon(Icons.mode_edit),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  _enableField = true;
+                });
+              },
             ),
           ),
         ],
@@ -62,69 +70,129 @@ class _ProfileAdressActivityState extends State<ProfileAdressActivity> {
                       TextFormField(
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Entre com seu nome';
+                              return 'Entre com um CEP válido';
                             }
                           },
-                          enabled: true,
-                          initialValue: model.userData["name"],
+                          enabled: _enableField,
+                          initialValue: model.userData["cep"],
                           decoration: InputDecoration(
-                            labelText: "Nome",
+                            labelText: "CEP",
                           ),
                           onSaved: (value) {
-                            name = value;
+                            cep = value;
                           }),
                       SizedBox(
                         height: 10.0,
                       ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value.isEmpty || !value.contains("@")) {
-                            return "Email Inválido";
-                          }
-                        },
-                        enabled: true,
-                        initialValue: model.userData["email"],
-                        decoration: InputDecoration(
-                          labelText: "E-mail",
-                        ),
-                        onSaved: (value) {
-                          email = value;
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Flexible(
+                            child: Container(
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty ) {
+                                    return "Cidade Inválida";
+                                  }
+                                },
+                                enabled: _enableField,
+                                initialValue: model.userData["locality"],
+                                decoration: InputDecoration(
+                                  labelText: "Cidade",
+                                ),
+                                onSaved: (value) {
+                                  locality = value;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Container(
+                            width: 100.0,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value.isEmpty || value.length != 2) {
+                                  return "UF Inválido";
+                                }
+                              },
+                              enabled: _enableField,
+                              initialValue: model.userData["uf"],
+                              decoration: InputDecoration(
+                                labelText: "UF",
+                              ),
+                              onSaved: (value) {
+                                uf = value;
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Flexible(
+                            child: Container(
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Rua Inválida";
+                                  }
+                                },
+                                enabled: _enableField,
+                                initialValue: model.userData["street"],
+                                decoration: InputDecoration(
+                                  labelText: "Rua",
+                                ),
+                                onSaved: (value) {
+                                  street = value;
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Container(
+                            width: 100.0,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Número Inválido";
+                                }
+                              },
+                              enabled: _enableField,
+                              initialValue: model.userData["number"],
+                              decoration: InputDecoration(
+                                labelText: "n°",
+                              ),
+                              onSaved: (value) {
+                                number = value;
+                              },
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 10.0,
                       ),
                       TextFormField(
                         validator: (value) {
-                          if (value.isEmpty || value.length != 11) {
-                            return "CPF Inválido";
+                          if (value.isEmpty) {
+                            return "Bairro Inválido";
                           }
                         },
-                        enabled: true,
-                        initialValue: model.userData["cpf"],
+                        enabled: _enableField,
+                        initialValue: model.userData["distric"],
                         decoration: InputDecoration(
-                          labelText: "CPF",
+                          labelText: "Bairro",
                         ),
                         onSaved: (value) {
-                          cpf = value;
-                        },
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value.isEmpty || value.length != 12) {
-                            return "Telefone Inválido";
-                          }
-                        },
-                        enabled: true,
-                        initialValue: model.userData["phone"],
-                        decoration: InputDecoration(
-                          labelText: "Telefone",
-                        ),
-                        onSaved: (value) {
-                          phoneNumber = value;
+                          district = value;
                         },
                       ),
                       SizedBox(
@@ -136,16 +204,21 @@ class _ProfileAdressActivityState extends State<ProfileAdressActivity> {
                             _formKey.currentState.save();
 
                             Map<String, dynamic> userData = {
-                              "name": name,
-                              "email": email,
-                              "cpf": cpf,
-                              "phone": phoneNumber
+                              "distric": district,
+                              "locality": locality,
+                              "street": street,
+                              "uf": uf,
+                              "number": number,
+                              "cep": cep,
                             };
 
                             model.editProfile(
                               userData: userData,
                               onSuccess: _onSuccess,
                             );
+                            setState(() {
+                              _enableField = false;
+                            });
                           }
                         },
                         shape: RoundedRectangleBorder(

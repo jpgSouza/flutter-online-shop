@@ -34,7 +34,6 @@ class CreditCard extends Model {
 
   Future<Null> _saveCreditCard(Map<String, dynamic> creditCardData) async {
     this.creditCardData = creditCardData;
-
     await Firestore.instance
         .collection("users")
         .document(user.firebaseUser.uid)
@@ -42,9 +41,7 @@ class CreditCard extends Model {
         .add(creditCardData).then((doc){
           cardId = doc.documentID;
     });
-
-    print(cardId);
-
+    notifyListeners();
   }
 
   void loadCard() async {
