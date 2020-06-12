@@ -92,7 +92,7 @@ class Cart extends Model {
     this.discountPercentage = percent;
   }
 
-  void updatePrices(){
+  void updatePrices() {
     notifyListeners();
   }
 
@@ -114,4 +114,51 @@ class Cart extends Model {
     return cartSubTotal() * discountPercentage / 100.0;
   }
 
+  Future<String> finishOrder() async {
+    if (products.length == 0) return null;
+    isLoading = true;
+    notifyListeners();
+
+    double productPrice = cartSubTotal();
+    double productShipping = cartShipping();
+    double discount = cartDiscount();
+
+    DocumentReference documentReference =
+        await Firestore.instance.collection("orders").add({
+      "userID": user.firebaseUser.uid,
+      "products": products.map((cartProduct) => cartProduct.toMap()).toList(),
+      "shippPrice:": productShipping,
+      "subTotal": productPrice,
+      "discount": discount,
+      "total": productPrice - discount + productShipping,
+      "status": 1
+    });
+
+    await Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("orders")
+        .document(documentReference.documentID)
+        .setData({"orderID": documentReference.documentID});
+
+    QuerySnapshot querySnapshot = await Firestore.instance
+        .collection("users")
+        .document(user.firebaseUser.uid)
+        .collection("cart")
+        .getDocuments();
+
+    for(DocumentSnapshot documentSnapshot in querySnapshot.documents){
+      documentSnapshot.reference.delete();
+    }
+
+    products.clear();
+    couponCode = null;
+    discountPercentage = 0;
+
+    isLoading = false;
+    notifyListeners();
+
+    return documentReference.documentID;
+
+  }
 }

@@ -3,6 +3,11 @@ import 'package:flutter_online_shop/model/cart_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ResumeCard extends StatelessWidget {
+
+  final VoidCallback buy;
+
+  ResumeCard(this.buy);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -78,7 +83,7 @@ class ResumeCard extends StatelessWidget {
                     height: 32.0,
                   ),
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: buy,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14.0)),
                     padding: EdgeInsets.all(0.0),

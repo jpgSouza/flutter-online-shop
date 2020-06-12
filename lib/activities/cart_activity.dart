@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/activities/login_activity.dart';
+import 'package:flutter_online_shop/activities/successful_order_activity.dart';
 import 'package:flutter_online_shop/model/cart_model.dart';
 import 'package:flutter_online_shop/model/credit_card_model.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
@@ -13,7 +14,6 @@ import 'package:scoped_model/scoped_model.dart';
 class CartActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CreditCard.of(context).loadCard();
     return Scaffold(
       appBar: AppBar(
         title: Text("Meu Carrinho"),
@@ -163,7 +163,14 @@ class CartActivity extends StatelessWidget {
                 DiscountCoupon(),
                 ShippingCart(),
                 PaymentMethodCard(),
-                ResumeCard(),
+                ResumeCard(() async{
+                  String orderID = await model.finishOrder();
+                  if(orderID != null){
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => SuccessfulOrderActivity(orderID))
+                    );
+                  }
+                }),
               ],
             );
           }

@@ -29,7 +29,7 @@ class CartProduct{
       "pid": pid,
       "amount": amount,
       "size": size,
-      //"product": productData.toResumeMap()
+      "product": productData.toResumeMap()
     };
   }
 

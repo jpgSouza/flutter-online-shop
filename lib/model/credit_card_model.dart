@@ -6,10 +6,10 @@ import 'package:scoped_model/scoped_model.dart';
 
 class CreditCard extends Model {
 
-  List<CardData> cards = [];
   Map<String, dynamic> creditCardData = Map();
 
   User user;
+  CardData cardData;
 
   final cardName = TextEditingController();
   final cardNumber = TextEditingController();
@@ -19,9 +19,9 @@ class CreditCard extends Model {
   String cardFlag;
   String cardId;
 
-  CreditCard(this.user){
-    if(this.user.isLoggedIn()) loadCard();
-  }
+  bool exist = false;
+
+  CreditCard(this.user);
 
   static CreditCard of(BuildContext context) =>
       ScopedModel.of<CreditCard>(context);
@@ -41,20 +41,8 @@ class CreditCard extends Model {
         .add(creditCardData).then((doc){
           cardId = doc.documentID;
     });
+    exist = true;
     notifyListeners();
-  }
-
-  void loadCard() async {
-
-    QuerySnapshot querySnapshot = await Firestore.instance.collection("users")
-    .document(user.firebaseUser.uid).collection("creditCard").getDocuments();
-
-    cards = querySnapshot.documents.map((doc) => CardData.fromDocument(doc)).toList();
-
-    print(cards);
-
-    notifyListeners();
-
   }
 
 

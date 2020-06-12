@@ -150,6 +150,8 @@ class _InfoActivityState extends State<InfoActivity> {
                                 cartProduct.pid = data.id;
                                 cartProduct.categoty = data.category;
 
+                                cartProduct.productData = data;
+
                                 Cart.of(context).addCart(cartProduct);
 
                                 Navigator.of(context).push(
