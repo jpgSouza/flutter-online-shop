@@ -4,6 +4,8 @@ import 'package:flutter_online_shop/activities/create_account_activity.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+import 'admin_activity.dart';
+
 class LoginActivity extends StatefulWidget {
   @override
   _LoginActivityState createState() => _LoginActivityState();
@@ -216,13 +218,16 @@ class _LoginActivityState extends State<LoginActivity> {
                         ),
                         RaisedButton(
                           onPressed: () {
-                            if (_formKey.currentState.validate()) {}
+                            if (_formKey.currentState.validate()) {
+                            }
                             model.login(
                               email: model.emailController.text,
                               password: model.passwordController.text,
                               onSuccess: _onSuccess,
                               onFail: _onFail,
+                              context: context,
                             );
+
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0)),
@@ -289,6 +294,11 @@ class _LoginActivityState extends State<LoginActivity> {
 
   void _onSuccess() {
     Navigator.of(context).pop();
+    if(User.of(context).isAdmin == true){
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context)=>AdminActivity())
+      );
+    }
   }
 
   void _onFail() {
@@ -298,4 +308,6 @@ class _LoginActivityState extends State<LoginActivity> {
       duration: Duration(seconds: 2),
     ));
   }
+
+
 }

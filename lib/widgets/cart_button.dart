@@ -9,6 +9,7 @@ class CartButton extends StatelessWidget {
       elevation: 4.0,
       child: Icon(Icons.shopping_cart, color: Colors.white,),
       onPressed: (){
+        //User.of(context).logout();
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context)=>CartActivity())
         );

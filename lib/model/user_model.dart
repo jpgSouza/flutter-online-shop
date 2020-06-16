@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/activities/admin_activity.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class User extends Model {
@@ -8,8 +10,11 @@ class User extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
   Map<String, dynamic> userData = Map();
+  Map<String, dynamic> userInfoData = Map();
 
   bool isLoading = false;
+  bool isAdmin = false;
+
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -66,7 +71,8 @@ class User extends Model {
       {@required String email,
       @required String password,
       @required VoidCallback onSuccess,
-      @required VoidCallback onFail}) async {
+      @required VoidCallback onFail,
+      @required BuildContext context}) async {
     isLoading = true;
     notifyListeners();
 
@@ -75,7 +81,12 @@ class User extends Model {
         .then((user) async {
       firebaseUser = user;
 
-      await _loadCurrentUser();
+      if(await verifyAdmin(firebaseUser)){
+        isAdmin = true;
+      }else{
+        isAdmin = false;
+        await _loadCurrentUser();
+      }
 
       onSuccess();
       isLoading = false;
@@ -89,7 +100,7 @@ class User extends Model {
 
   void logout() async {
     await _auth.signOut();
-
+    isAdmin = false;
     userData = Map();
     firebaseUser = null;
 
@@ -151,6 +162,16 @@ class User extends Model {
         .get();
     userData = docUser.data;
     notifyListeners();
+  }
+
+  Future<bool> verifyAdmin(FirebaseUser firebaseUser) async{
+    return await Firestore.instance.collection("admin").document(firebaseUser.uid).get().then((doc){
+      if(doc.data != null){
+        return true;
+      }else{
+        return false;
+      }
+    });
   }
 
 }
