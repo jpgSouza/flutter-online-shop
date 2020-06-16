@@ -1,9 +1,11 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/bloc/orders_bloc.dart';
 import 'package:flutter_online_shop/bloc/user_bloc.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:flutter_online_shop/tabs/orders_list_tab.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class AdminActivity extends StatefulWidget {
   @override
@@ -79,7 +81,45 @@ class _AdminActivityState extends State<AdminActivity> {
               ),
           )
         )
-      )
+      ),
+      floatingActionButton: _buildFloatActionButton(),
     );
+  }
+
+  Widget _buildFloatActionButton(){
+    switch(_page){
+      case 0:
+        return SpeedDial(
+          child: Icon(Icons.sort),
+          backgroundColor: Color.fromARGB(255, 240, 80, 83),
+          overlayOpacity: 0.4,
+          overlayColor: Colors.black,
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.arrow_downward, color: Colors.white,),
+              backgroundColor: Color.fromARGB(210, 240, 80, 83),
+              label: "Entregues Abaixo",
+              labelStyle: TextStyle(fontSize: 14.0),
+              onTap: (){
+                _ordersBloc.setOrderSort(SortOrders.READY_LAST);
+              }
+            ),
+            SpeedDialChild(
+                child: Icon(Icons.arrow_upward, color: Colors.white,),
+                backgroundColor: Color.fromARGB(210, 240, 80, 83),
+                label: "Entregues Acima",
+                labelStyle: TextStyle(fontSize: 14.0),
+                onTap: (){
+                  _ordersBloc.setOrderSort(SortOrders.READY_FIRST);
+                }
+            )
+          ],
+        );
+        break;
+
+      case 1:
+        return null;
+        break;
+    }
   }
 }
