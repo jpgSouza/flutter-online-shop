@@ -31,6 +31,7 @@ class _AdminActivityState extends State<AdminActivity> {
   @override
   void dispose() {
     _pageController.dispose();
+
     super.dispose();
   }
 

@@ -24,7 +24,6 @@ class OrderListTile extends StatelessWidget {
         elevation: 5.0,
         child: ExpansionTile(
           key: Key(_documentSnapshot.documentID),
-          initiallyExpanded:_documentSnapshot.data["status"] != 4,
           title: Text(
             "${_documentSnapshot.documentID.substring(_documentSnapshot.documentID.length - 7, _documentSnapshot.documentID.length)}"
             " - ${states[_documentSnapshot.data["status"]]}",

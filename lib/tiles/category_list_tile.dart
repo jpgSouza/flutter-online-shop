@@ -38,7 +38,7 @@ class CategoryListTile extends StatelessWidget {
                           backgroundImage: NetworkImage(doc.data["images"][0]),
                           backgroundColor: Colors.transparent,
                         ),
-                        title: Text("${doc.data["title"]}"),
+                        title: Text(doc.data["title"]),
                         trailing:
                             Text("R\$ ${doc.data["price"].toStringAsFixed(2)}"),
                         onTap: () {
