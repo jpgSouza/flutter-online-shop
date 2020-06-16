@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_online_shop/data/card_data.dart';
+import 'file:///C:/Users/joao_/OneDrive/Documentos/Git-Projects/flutter-online-shop/lib/controller/data/card_data.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
