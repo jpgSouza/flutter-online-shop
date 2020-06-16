@@ -5,6 +5,7 @@ import 'package:flutter_online_shop/bloc/orders_bloc.dart';
 import 'package:flutter_online_shop/bloc/user_bloc.dart';
 import 'package:flutter_online_shop/model/user_model.dart';
 import 'package:flutter_online_shop/tabs/orders_list_tab.dart';
+import 'package:flutter_online_shop/tabs/products_list_tab.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class AdminActivity extends StatefulWidget {
@@ -74,9 +75,7 @@ class _AdminActivityState extends State<AdminActivity> {
                 controller: _pageController,
                 children: <Widget>[
                   OrdersListTab(),
-                  Container(
-                    color: Colors.red,
-                  ),
+                  ProductsListTab(),
                 ],
               ),
           )
